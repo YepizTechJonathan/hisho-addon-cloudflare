@@ -22,6 +22,23 @@ def test_manifest_is_valid_and_readme_matches(addon):
     assert addon_store.readme_problems(HERE) == []
 
 
+
+def test_the_token_link_opens_cloudflare_with_exactly_the_permissions_ticked(addon):
+    """Cloudflare's documented template URL: permissionGroupKeys is a URL-encoded JSON list of {key, type}."""
+    from urllib.parse import parse_qs, urlparse
+    url = addon.manifest["help"]["token"]["get"]
+    u = urlparse(url)
+    assert (u.scheme, u.netloc, u.path) == ("https", "dash.cloudflare.com", "/profile/api-tokens")
+    q = parse_qs(u.query)
+    keys = json.loads(q["permissionGroupKeys"][0])
+    assert keys == [{"key": "zone", "type": "read"}, {"key": "dns", "type": "edit"},
+                    {"key": "zone_settings", "type": "read"}, {"key": "ssl_and_certificates", "type": "read"},
+                    {"key": "account_settings", "type": "read"}]
+    assert q["accountId"] == ["*"] and q["zoneId"] == ["all"] and q["name"] == ["Hisho"]
+    assert "{" not in url and " " not in url          # nothing the page would try to fill in
+    required = [k for k, t in addon.manifest["entry_schema"].items() if not str(t).endswith("?")]
+    assert required == ["token"]                       # the token is all the form needs; zones are found
+
 def test_the_cloudflare_integration_lists_zones_and_records(fleet, monkeypatch):
     import io, json as _json
     cf = addons.get("cloudflare")

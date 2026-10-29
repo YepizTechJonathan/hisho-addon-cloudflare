@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0
+
+- The token's "get it" link opens Cloudflare's create-token page already filled in (name Hisho; Zone Read, DNS Edit,
+  Zone Settings Read, SSL and Certificates Read, Account Settings Read on all domains): Create Token, paste, done.
+  The form asks for nothing else; Hisho finds the domains itself.
+
 ## 0.3.2
 
 - Every field on its setup form says in plain words what it is, and links to where to get it (addon.yaml `help:`, shown by Hisho's dashboard).

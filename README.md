@@ -12,7 +12,7 @@ add-ons through the `dns_records` capability it provides.
 
 - You need:
   - A Cloudflare account with your domains on it
-  - A Cloudflare API token (Zone:Read, DNS:Edit, Zone Settings:Read, SSL and Certificates:Read)
+  - A Cloudflare API token: the link on the form makes it with the right permissions in a few clicks
 - Runs on: the Core machine, inside Hisho Core
 - One entry per Cloudflare token, each with:
   - `token` (password, kept as a local secret, required)
@@ -37,9 +37,12 @@ Its card names any domain with an exposed server or an SSL problem. Its page (**
 
 ## Settings
 
-One entry per Cloudflare API token. Make the token at dash.cloudflare.com > My Profile > API
-Tokens > Custom token with Zone:Read, DNS:Edit, Zone Settings:Read and SSL and Certificates:Read
-on all zones (DNS:Read instead of Edit keeps it read-only). Paste it on the page, or give its
+One entry per Cloudflare API token. On the add-on page, **+ add** > the token's **Make Hisho's token in
+Cloudflare** link opens Cloudflare's create-token page already filled in: named Hisho, with Zone:Read, DNS:Edit,
+Zone Settings:Read, SSL and Certificates:Read and Account Settings:Read on all zones and accounts. Press
+**Continue to summary**, **Create Token**, copy it and paste it into the form; nothing else is asked (Hisho
+finds your domains itself). DNS:Read instead of Edit keeps it read-only; adding User > API Tokens:Read lets the
+"Keys and exposure" review list your tokens. Paste it on the page, or give its
 secret's name. Entries are kept in `~/Hisho/System/Config/Addons/cloudflare.yaml`. To rotate:
 dash.cloudflare.com > My Profile > API Tokens > the token > Roll.
 

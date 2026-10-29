@@ -3,16 +3,17 @@
 # point straight at a server, the SSL mode and certificate problems. Records can be added, changed,
 # proxied or deleted from the add-on page (each asks first; every change goes to the journal as
 # dns-change with the old value), with `hisho dns`, or by other add-ons through dns_records.
-# Token: dash.cloudflare.com > My Profile > API Tokens > Custom: Zone:Read, DNS:Edit, Zone Settings:Read,
-# SSL and Certificates:Read on all zones (DNS:Read instead of Edit keeps it read-only).
+# Token: the token field's help link opens Cloudflare's "create token" page pre-filled (permissionGroupKeys):
+# Zone:Read, DNS:Edit, Zone Settings:Read, SSL and Certificates:Read, Account Settings:Read on all zones and accounts
+# (DNS:Read instead of Edit keeps it read-only; User > API Tokens:Read lets the Keys review list your tokens).
 name: cloudflare
 kind: integration
 title: Cloudflare
 description: Your Cloudflare domains, their DNS records and SSL settings; change records safely.
-version: 0.3.2
+version: 0.4.0
 you_need:
   - "A Cloudflare account with your domains on it"
-  - "A Cloudflare API token (Zone:Read, DNS:Edit, Zone Settings:Read, SSL and Certificates:Read)"
+  - "A Cloudflare API token: the link on the form makes it with the right permissions in a few clicks"
 provides: [dns_records]   # hisho dns and other add-ons change DNS through this
 provider: provider.py
 secret_rotate: dash.cloudflare.com > My Profile > API Tokens > the token > Roll
@@ -28,8 +29,8 @@ entry_form:
 help:
   token:
     label: Cloudflare API token
-    say: "A key Hisho uses to read your domains and change DNS records. In Cloudflare, make a Custom token with Zone:Read, DNS:Edit, Zone Settings:Read and SSL and Certificates:Read (DNS:Read instead of Edit keeps it read-only). Paste it, or type the name of the secret you saved it under."
-    get: "https://dash.cloudflare.com/profile/api-tokens"
-    get_label: Make a token in Cloudflare
+    say: "A key Hisho uses to read your domains and change DNS records. Press the link: Cloudflare opens a new token named Hisho with exactly the permissions it needs already ticked (Zone Read, DNS Edit, Zone Settings Read, SSL and Certificates Read, Account Settings Read, on all your domains). Press Continue to summary, then Create Token, copy the token and paste it here. That's all: Hisho finds your domains itself. (Want it read-only? Change DNS Edit to Read before creating it.)"
+    get: "https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22zone%22%2C%22type%22%3A%22read%22%7D%2C%7B%22key%22%3A%22dns%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22zone_settings%22%2C%22type%22%3A%22read%22%7D%2C%7B%22key%22%3A%22ssl_and_certificates%22%2C%22type%22%3A%22read%22%7D%2C%7B%22key%22%3A%22account_settings%22%2C%22type%22%3A%22read%22%7D%5D&accountId=%2A&zoneId=all&name=Hisho"
+    get_label: Make Hisho's token in Cloudflare
   note:
     say: "Anything that helps you remember this token, like which account it is for."
