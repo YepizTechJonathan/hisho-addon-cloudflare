@@ -9,7 +9,7 @@ name: cloudflare
 kind: integration
 title: Cloudflare
 description: Your Cloudflare domains, their DNS records and SSL settings; change records safely.
-version: 0.3.1
+version: 0.3.2
 you_need:
   - "A Cloudflare account with your domains on it"
   - "A Cloudflare API token (Zone:Read, DNS:Edit, Zone Settings:Read, SSL and Certificates:Read)"
@@ -24,3 +24,12 @@ entry_schema:
 entry_form:
   token: "API token (paste it, or its secret's name, e.g. CLOUDFLARE_EXAMPLETECH_API_TOKEN)"
   note: "Note"
+
+help:
+  token:
+    label: Cloudflare API token
+    say: "A key Hisho uses to read your domains and change DNS records. In Cloudflare, make a Custom token with Zone:Read, DNS:Edit, Zone Settings:Read and SSL and Certificates:Read (DNS:Read instead of Edit keeps it read-only). Paste it, or type the name of the secret you saved it under."
+    get: "https://dash.cloudflare.com/profile/api-tokens"
+    get_label: Make a token in Cloudflare
+  note:
+    say: "Anything that helps you remember this token, like which account it is for."
